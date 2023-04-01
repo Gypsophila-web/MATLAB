@@ -1,42 +1,42 @@
 clear
-f=3400;  %ÈËËµ»°µÄÓïÒôÆµÂÊ·¶Î§Îª0-3400hz
-T = 3;  %¶ÁÈ¡ÒôÆµÊ±¼ä
-%ÉùÒôĞÅºÅµÄ²ÉÑù
-F=48000;%audioreadº¯ÊıÄ¬ÈÏ²ÉÑùÆµÂÊÎª48000hz
-filename = 'ÄôÎÄÌÎ.aac';
-samples = [1,T*F]; %½ö¶ÁÈ¡Ç° 3 ÃëµÄÄÚÈİ
+f=3400;  %äººè¯´è¯çš„è¯­éŸ³é¢‘ç‡èŒƒå›´ä¸º0-3400hz
+T = 3;  %è¯»å–éŸ³é¢‘æ—¶é—´
+%å£°éŸ³ä¿¡å·çš„é‡‡æ ·
+F=48000;%audioreadå‡½æ•°é»˜è®¤é‡‡æ ·é¢‘ç‡ä¸º48000hz
+filename = 'è‚æ–‡æ¶›.aac';
+samples = [1,T*F]; %ä»…è¯»å–å‰ 3 ç§’çš„å†…å®¹
 [y_org,F] = audioread(filename,samples);
-y_org=y_org(:,1);%ÓÉÓÚxÊÇË«ÉùµÀ£¬ËùÒÔÈ¡ËüµÄ×óÉùµÀ
-y_org = resample(y_org,f,F) ; %ÒÔÆµÂÊÎª3400hzÖØĞÂ²ÉÑù
-n=length(y_org);%»ñÈ¡xµÄ²ÉÑùµãÊı
-dt=1/f;%Çó²ÉÑù¼ä¸ô
-time=(0:n-1)*dt;%²ÉÑùÊ±¼äµã
+y_org=y_org(:,1);%ç”±äºxæ˜¯åŒå£°é“ï¼Œæ‰€ä»¥å–å®ƒçš„å·¦å£°é“
+y_org = resample(y_org,f,F) ; %ä»¥é¢‘ç‡ä¸º3400hzé‡æ–°é‡‡æ ·
+n=length(y_org);%è·å–xçš„é‡‡æ ·ç‚¹æ•°
+dt=1/f;%æ±‚é‡‡æ ·é—´éš”
+time=(0:n-1)*dt;%é‡‡æ ·æ—¶é—´ç‚¹
 subplot(321);plot(time,y_org);
-title('Ô­Ê¼ÉùÒôĞÅºÅÊ±Óò²¨ĞÎ');xlabel('Ê±¼ä/s');axis([0 3 -0.3 0.3]);
+title('åŸå§‹å£°éŸ³ä¿¡å·æ—¶åŸŸæ³¢å½¢');xlabel('æ—¶é—´/s');axis([0 3 -0.3 0.3]);
 
-%Ô­Ê¼ĞÅºÅfft±ä»»
+%åŸå§‹ä¿¡å·fftå˜æ¢
 fx_org=f/n*(0:round(n/2)-1);
 fy_org=fft(y_org);
 subplot(322);plot(fx_org,abs(fy_org(1:round(n/2))));
-title('Ô­Ê¼ÉùÒôĞÅºÅ¸µÀïÒ¶±ä»»');xlabel('Hz');
+title('åŸå§‹å£°éŸ³ä¿¡å·å‚…é‡Œå¶å˜æ¢');xlabel('Hz');
 
-%¶ÔÔ­Ê¼ĞÅºÅ½øĞĞ²ÉÑù
-fs=f*0.1; %ĞÂµÄ²ÉÑùÂÊ,fs=f*2ÎªÁÙ½ç²ÉÑù£¬fs=f*4Îª¹ı²ÉÑù£¬fs=f*0.1ÎªÇ·²ÉÑù
+%å¯¹åŸå§‹ä¿¡å·è¿›è¡Œé‡‡æ ·
+fs=f*0.1; %æ–°çš„é‡‡æ ·ç‡,fs=f*2ä¸ºä¸´ç•Œé‡‡æ ·ï¼Œfs=f*4ä¸ºè¿‡é‡‡æ ·ï¼Œfs=f*0.1ä¸ºæ¬ é‡‡æ ·
 y_sam = resample(y_org,fs,f) ;
-n1=length(y_sam);%»ñÈ¡yµÄ²ÉÑùµãÊı
-time_sam=(0:n1-1)/fs;%ĞÂµÄ²ÉÑùÊ±¼äµã
+n1=length(y_sam);%è·å–yçš„é‡‡æ ·ç‚¹æ•°
+time_sam=(0:n1-1)/fs;%æ–°çš„é‡‡æ ·æ—¶é—´ç‚¹
 subplot(323);
 plot(time_sam,y_sam);
-title('Ç·²ÉÑùĞÅºÅÊ±Óò²¨ĞÎ')
-xlabel('Ê±¼ä/s');axis([0 3 -0.3 0.3]);
+title('æ¬ é‡‡æ ·ä¿¡å·æ—¶åŸŸæ³¢å½¢')
+xlabel('æ—¶é—´/s');axis([0 3 -0.3 0.3]);
 
-%²ÉÑùºóµÄĞÅºÅfft±ä»»
+%é‡‡æ ·åçš„ä¿¡å·fftå˜æ¢
 fx_sam=fs/n1*(0:round(n1/4)-1);
 fy_sam=fft(y_sam);
 subplot(324);plot(fx_sam,abs(fy_sam(1:round(n1/4))));
-title('Ç·²ÉÑùĞÅºÅ¸µÀïÒ¶±ä»»');xlabel('Hz');
+title('æ¬ é‡‡æ ·ä¿¡å·å‚…é‡Œå¶å˜æ¢');xlabel('Hz');
 
-%ÖØ½¨ĞÅºÅ
+%é‡å»ºä¿¡å·
 n2 = 0:T*fs;
 t_re=0:1/fs:T;
 xr=zeros(fs*T+1,1);
@@ -48,12 +48,12 @@ for i=0:fs*T
     end
 end
 T_N = ones(length(n2),1)*t_re-n2'*ones(1,length(t_re))/fs;
-y_re = xr'*sinc(2*pi*fs*T_N);    %ÄÚ²å¹«Ê½¼ÆËã
-subplot(325);plot(t_re,y_re);title('»¹Ô­ĞÅºÅ');axis([0 3 -0.3 0.3]);
-%sound(y_re,fs) ²¥·ÅÖØ½¨ºóµÄÒôÆµ
+y_re = xr'*sinc(2*pi*fs*T_N);    %å†…æ’å…¬å¼è®¡ç®—
+subplot(325);plot(t_re,y_re);title('è¿˜åŸä¿¡å·');axis([0 3 -0.3 0.3]);
+%sound(y_re,fs) æ’­æ”¾é‡å»ºåçš„éŸ³é¢‘
 
-%»¹Ô­ĞÅºÅfft±ä»»
+%è¿˜åŸä¿¡å·fftå˜æ¢
 fx_re=fs/length(t_re)*(0:round(n1/4)-1);
 fy_re=fft(y_re);
 subplot(326);plot(fx_re,abs(fy_re(1:round(n1/4))));
-title('»¹Ô­ĞÅºÅ¸µÀïÒ¶±ä»»');xlabel('Hz');
+title('è¿˜åŸä¿¡å·å‚…é‡Œå¶å˜æ¢');xlabel('Hz');
